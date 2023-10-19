@@ -11,6 +11,8 @@ namespace CryptocurrenciesWPF.ViewModels
 {
     public class CryptocurrencyProfileViewModel : BaseViewModel
     {
+        private NavigatorViewModel navigatorViewModel;
+
         private Cryptocurrency currentCryptocurrency;
         public Cryptocurrency CurrentCryptocurrency
         {
@@ -22,5 +24,9 @@ namespace CryptocurrenciesWPF.ViewModels
             }
         }
 
+        public CryptocurrencyProfileViewModel(NavigatorViewModel navigatorViewModel)
+        {
+            this.navigatorViewModel = navigatorViewModel;
+        }
     }
 }

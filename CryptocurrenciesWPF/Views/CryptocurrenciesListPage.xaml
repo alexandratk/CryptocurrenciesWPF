@@ -9,8 +9,7 @@
       Title="CryptocurrenciesListPage">
 
     <Grid>
-        <TextBlock>cryptocurrenciesListPage</TextBlock>
-        <ListBox Grid.Column="0" ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
+        <ListBox ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">

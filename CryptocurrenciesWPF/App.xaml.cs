@@ -20,7 +20,7 @@ namespace CryptocurrenciesWPF
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = new NavigatorViewModel()
             };
 
             MainWindow.Show();

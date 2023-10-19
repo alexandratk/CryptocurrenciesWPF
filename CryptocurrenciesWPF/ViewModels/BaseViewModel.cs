@@ -11,17 +11,6 @@ namespace CryptocurrenciesWPF.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        private Page currentPage;
-        public Page CurrentPage
-        {
-            get { return currentPage; }
-            set
-            {
-                currentPage = value;
-                OnPropertyChanged("CurrentPage");
-            }
-        }
-
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
