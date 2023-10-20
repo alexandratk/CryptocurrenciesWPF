@@ -1,6 +1,7 @@
 ﻿using CryptocurrenciesWPF.Models;
 using CryptocurrenciesWPF.Views;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,19 +19,20 @@ namespace CryptocurrenciesWPF.ViewModels
     {
         private NavigatorViewModel navigatorViewModel;
 
-        private HttpClient client = new HttpClient();
-
         private Cryptocurrency selectedCryptocurrency;
-        private int selectedNumber = 10;
+        private int selectedNumber;
 
         public Cryptocurrency SelectedCryptocurrency
         {
             get { return selectedCryptocurrency; }
             set
             {
-                selectedCryptocurrency = value;
-                navigatorViewModel.GoToProfilePageFromListPage(selectedCryptocurrency);
-                OnPropertyChanged("SelectedCryptocurrency");
+                if (value != null)
+                {
+                    selectedCryptocurrency = value;
+                    navigatorViewModel.GoToProfilePageFromListPage(selectedCryptocurrency);
+                    OnPropertyChanged("SelectedCryptocurrency");
+                }
             }
         }
 
@@ -40,28 +42,29 @@ namespace CryptocurrenciesWPF.ViewModels
             set
             {
                 selectedNumber = value;
-                UpdateList();
-                OnPropertyChanged("SelectedNumber");
+                UpdateCryptocurrenciesList().ContinueWith(x => { OnPropertyChanged("SelectedNumber"); });
+             //   OnPropertyChanged("SelectedNumber");
             }
         }
 
         public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; set; }
 
-        public ObservableCollection<int> Numbers { get; set; } = new ObservableCollection<int>();
+        public List<int> Numbers { get; set; } = new List<int>();
 
         public CryptocurrenciesListViewModel(NavigatorViewModel navigatorViewModel)
         {
             this.navigatorViewModel = navigatorViewModel;
-            UpdateList();
-            CreateNumberList();
+            SelectedNumber = 10;
+            UpdateCryptocurrenciesList().ContinueWith(x => { CreateNumberList(); });
         }
 
-        public void UpdateList()
+        public async Task UpdateCryptocurrenciesList()
         {
-            var response = client.GetFromJsonAsync<JsonData>("https://api.coincap.io/v2/assets?limit="+selectedNumber.ToString()).Result;
+            var response = await navigatorViewModel.HTTPClient.GetFromJsonAsync<JsonData<Cryptocurrency>>("https://api.coincap.io/v2/assets?limit="+selectedNumber.ToString());
             Cryptocurrencies = new ObservableCollection<Cryptocurrency>(response.Data);
             OnPropertyChanged("Cryptocurrencies");
         }
+
 
         public void CreateNumberList()
         {
@@ -69,6 +72,7 @@ namespace CryptocurrenciesWPF.ViewModels
             {
                 Numbers.Add(i);
             }
+            OnPropertyChanged(nameof(Numbers));
         }
     }
 }

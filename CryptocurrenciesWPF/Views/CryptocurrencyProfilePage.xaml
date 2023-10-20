@@ -7,10 +7,29 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CryptocurrencyProfilePage">
-
-    <Grid>
-        <TextBlock>CryptocurrencyProfilePage</TextBlock>
-        <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Rank}" HorizontalAlignment="Center" />
-        <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Name}" HorizontalAlignment="Center" />
-    </Grid>
+    <ScrollViewer>
+        <DockPanel LastChildFill="True">
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Id}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Rank}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Symbol}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Name}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Supply}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.MaxSupply}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.MarketCapUsd}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.VolumeUsd24Hr}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.PriceUsd}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.ChangePercent24Hr}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Vwap24Hr}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+            <ListBox ItemsSource="{Binding Path=Markets}" IsHitTestVisible="False">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5">
+                            <TextBlock FontSize="16" Text="{Binding Path=ExchangeId}" HorizontalAlignment="Center" />
+                            <TextBlock FontSize="16" Text="{Binding Path=BaseId}" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </ScrollViewer>
 </Page>

@@ -8,10 +8,11 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Height="50" Background="DarkGray">
+            <Button Command="{Binding BackCommand}">-</Button>
             <!--<Button Content="List" Command="{Binding goToListPageCommand}"/>
             <Button Content="Conversion" Command="{Binding goToConversionPageCommand}"/>-->
         </StackPanel>
 
-        <Frame Margin="0 50 0 0" Grid.Row="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Visible" />
+        <Frame Margin="0 50 0 0" Grid.Row="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>
