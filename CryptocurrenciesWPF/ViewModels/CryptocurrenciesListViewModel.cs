@@ -29,9 +29,9 @@ namespace CryptocurrenciesWPF.ViewModels
             {
                 if (value != null)
                 {
-                    selectedCryptocurrency = value;
-                    navigatorViewModel.GoToProfilePageFromListPage(selectedCryptocurrency);
+                    selectedCryptocurrency = null;
                     OnPropertyChanged("SelectedCryptocurrency");
+                    navigatorViewModel.GoToProfilePageFromListPage(value);
                 }
             }
         }
@@ -68,10 +68,13 @@ namespace CryptocurrenciesWPF.ViewModels
 
         public void CreateNumberList()
         {
-            for (int i = 1; i <= 200; i++)
-            {
-                Numbers.Add(i);
-            }
+
+            Numbers.Add(5);
+            Numbers.Add(10);
+            Numbers.Add(20);
+            Numbers.Add(50);
+            Numbers.Add(100);
+            Numbers.Add(200);
             OnPropertyChanged(nameof(Numbers));
         }
     }

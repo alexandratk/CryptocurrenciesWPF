@@ -9,7 +9,7 @@
       Title="CryptocurrenciesListPage">
 
     <DockPanel LastChildFill="True">
-        <ComboBox DockPanel.Dock="Top" Height="20" ItemsSource="{Binding Numbers}" SelectedItem="{Binding SelectedNumber}" IsEditable="True">
+        <ComboBox DockPanel.Dock="Top" Height="20" ItemsSource="{Binding Numbers}" SelectedItem="{Binding SelectedNumber}">
         </ComboBox>
         <ListBox ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
             <ListBox.ItemTemplate>

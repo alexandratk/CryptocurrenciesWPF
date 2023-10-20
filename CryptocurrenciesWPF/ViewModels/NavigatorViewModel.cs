@@ -1,6 +1,7 @@
 ﻿using CryptocurrenciesWPF.Commands;
 using CryptocurrenciesWPF.Models;
 using CryptocurrenciesWPF.Views;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Windows.Controls;
 
@@ -9,22 +10,28 @@ namespace CryptocurrenciesWPF.ViewModels
     public class NavigatorViewModel : BaseViewModel
     {
         private HttpClient httpClient = new HttpClient();
-        public HttpClient HTTPClient {
+
+        private Stack<(Page page, BaseViewModel context)> pageHistory = new Stack<(Page, BaseViewModel)>();
+
+        public HttpClient HTTPClient
+        {
             get
             {
                 return httpClient;
             }
         }
 
-        private RelayCommand backCommand;
-        public RelayCommand BackCommand
+        private RelayCommand goToListViewCommand;
+        public RelayCommand GoToListViewCommand
         {
             get
             {
-                return backCommand ??
-                  (backCommand = new RelayCommand(obj =>
+                return goToListViewCommand ??
+                  (goToListViewCommand = new RelayCommand(obj =>
                   {
-                      GoToListPageFromProfilePage();
+                      cryptocurrenciesListPage = new CryptocurrenciesListPage();
+                      cryptocurrenciesListPage.DataContext = cryptocurrenciesListViewModel;
+                      GoToPage(cryptocurrenciesListPage);
                   }));
             }
         }
@@ -46,7 +53,6 @@ namespace CryptocurrenciesWPF.ViewModels
         private CryptocurrencyConversionPage cryptocurrencyConversionPage;
         private CryptocurrencyConversionViewModel cryptocurrencyConversionViewModel;
 
-        private CryptocurrencyProfilePage cryptocurrencyProfilePage;
         private CryptocurrencyProfileViewModel cryptocurrencyProfileViewModel;
 
         public NavigatorViewModel()
@@ -59,9 +65,7 @@ namespace CryptocurrenciesWPF.ViewModels
             cryptocurrencyConversionViewModel = new CryptocurrencyConversionViewModel(this);
             cryptocurrencyConversionPage.DataContext = cryptocurrencyConversionViewModel;
 
-            cryptocurrencyProfilePage = new CryptocurrencyProfilePage();
             cryptocurrencyProfileViewModel = new CryptocurrencyProfileViewModel(this);
-            cryptocurrencyProfilePage.DataContext = cryptocurrencyProfileViewModel;
 
             CurrentPage = cryptocurrenciesListPage;
         }
@@ -73,15 +77,12 @@ namespace CryptocurrenciesWPF.ViewModels
 
         public void GoToProfilePageFromListPage(Cryptocurrency cryptocurrency)
         {
-            cryptocurrencyProfileViewModel.CurrentCryptocurrency = new Cryptocurrency(cryptocurrency);
-            cryptocurrencyProfileViewModel.UpdateMarketsList().ContinueWith(x => { GoToPage(cryptocurrencyProfilePage); });
-        }
-
-        public void GoToListPageFromProfilePage()
-        {
-         //   cryptocurrenciesListViewModel.SelectedCryptocurrency = new Cryptocurrency(cryptocurrency);
-
-            GoToPage(cryptocurrenciesListPage);
+            cryptocurrenciesListPage.NavigationService.Refresh();
+            cryptocurrencyProfileViewModel.UpdateCurrentCryptocurrency(cryptocurrency);
+            cryptocurrencyProfileViewModel.UpdateMarketsList();
+            CryptocurrencyProfilePage cryptocurrencyProfilePage = new CryptocurrencyProfilePage();
+            cryptocurrencyProfilePage.DataContext = cryptocurrencyProfileViewModel;
+            GoToPage(cryptocurrencyProfilePage);
         }
     }
 }

@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Height="50" Background="DarkGray">
-            <Button Command="{Binding BackCommand}">-</Button>
+            <Button Command="{Binding GoToListViewCommand}">Main</Button>
             <!--<Button Content="List" Command="{Binding goToListPageCommand}"/>
             <Button Content="Conversion" Command="{Binding goToConversionPageCommand}"/>-->
         </StackPanel>
