@@ -8,17 +8,18 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CryptocurrenciesListPage">
 
-    <Grid>
+    <DockPanel LastChildFill="True">
+        <ComboBox DockPanel.Dock="Top" Height="20" ItemsSource="{Binding Numbers}" SelectedItem="{Binding SelectedNumber}">
+        </ComboBox>
         <ListBox ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
-
                         <TextBlock FontSize="16" Text="{Binding Path=Rank}" HorizontalAlignment="Center" />
                         <TextBlock FontSize="16" Text="{Binding Path=Name}" HorizontalAlignment="Center" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </Grid>
+    </DockPanel>
 </Page>
