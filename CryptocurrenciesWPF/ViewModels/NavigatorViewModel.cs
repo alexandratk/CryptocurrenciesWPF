@@ -32,6 +32,7 @@ namespace CryptocurrenciesWPF.ViewModels
                       cryptocurrenciesListPage = new CryptocurrenciesListPage();
                       cryptocurrenciesListPage.DataContext = cryptocurrenciesListViewModel;
                       GoToPage(cryptocurrenciesListPage);
+                      EnabledGoToListViewButton = false;
                   }));
             }
         }
@@ -44,6 +45,17 @@ namespace CryptocurrenciesWPF.ViewModels
             {
                 currentPage = value;
                 OnPropertyChanged("CurrentPage");
+            }
+        }
+
+        private bool enabledGoToListViewButton;
+        public bool EnabledGoToListViewButton
+        {
+            get { return enabledGoToListViewButton; }
+            set
+            {
+                enabledGoToListViewButton = value;
+                OnPropertyChanged("EnabledGoToListViewButton");
             }
         }
 
@@ -72,12 +84,15 @@ namespace CryptocurrenciesWPF.ViewModels
 
         public void GoToPage(Page page)
         {
+            if (!EnabledGoToListViewButton)
+            {
+                EnabledGoToListViewButton = true;
+            }
             CurrentPage = page;
         }
 
         public void GoToProfilePageFromListPage(Cryptocurrency cryptocurrency)
         {
-            cryptocurrenciesListPage.NavigationService.Refresh();
             cryptocurrencyProfileViewModel.UpdateCurrentCryptocurrency(cryptocurrency);
             cryptocurrencyProfileViewModel.UpdateMarketsList();
             CryptocurrencyProfilePage cryptocurrencyProfilePage = new CryptocurrencyProfilePage();

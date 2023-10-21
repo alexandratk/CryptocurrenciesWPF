@@ -1,9 +1,11 @@
-﻿using CryptocurrenciesWPF.Models;
+﻿using CryptocurrenciesWPF.Commands;
+using CryptocurrenciesWPF.Models;
 using CryptocurrenciesWPF.Views;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -21,6 +23,18 @@ namespace CryptocurrenciesWPF.ViewModels
 
         private Cryptocurrency selectedCryptocurrency;
         private int selectedNumber;
+        private string searchText = "";
+
+        public string SearchText
+        {
+            get { return searchText; }
+            set
+            {
+                searchText = value;
+                OnPropertyChanged("SearchText");
+                UpdateCryptocurrenciesList();
+            }
+        }
 
         public Cryptocurrency SelectedCryptocurrency
         {
@@ -60,8 +74,14 @@ namespace CryptocurrenciesWPF.ViewModels
 
         public async Task UpdateCryptocurrenciesList()
         {
-            var response = await navigatorViewModel.HTTPClient.GetFromJsonAsync<JsonData<Cryptocurrency>>("https://api.coincap.io/v2/assets?limit="+selectedNumber.ToString());
+            var response = await navigatorViewModel.HTTPClient.GetFromJsonAsync<JsonData<Cryptocurrency>>("https://api.coincap.io/v2/assets?limit="+selectedNumber.ToString() + "&search=" + searchText);
             Cryptocurrencies = new ObservableCollection<Cryptocurrency>(response.Data);
+            int cryptocurrenciesCount = Cryptocurrencies.Count;
+            for (int i = 0; i < cryptocurrenciesCount; i++)
+            {
+                Cryptocurrencies[i].PriceUsdString = Cryptocurrencies[i].PriceUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
+                Cryptocurrencies[i].ChangePercent24HrString = Cryptocurrencies[i].ChangePercent24Hr.ToString("P", CultureInfo.InvariantCulture);
+            }
             OnPropertyChanged("Cryptocurrencies");
         }
 

@@ -8,7 +8,8 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CryptocurrencyProfilePage">
     <ScrollViewer>
-        <DockPanel LastChildFill="True">
+        <Grid>
+            <DockPanel LastChildFill="True">
             <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Id}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
             <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Rank}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
             <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Symbol}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
@@ -31,5 +32,6 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
+        </Grid>
     </ScrollViewer>
 </Page>
