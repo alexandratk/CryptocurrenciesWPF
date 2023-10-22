@@ -1,17 +1,15 @@
 ﻿using CryptocurrenciesWPF.Models;
+using LiveCharts.Wpf;
+using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.Windows.Media;
+using Newtonsoft.Json;
 
 namespace CryptocurrenciesWPF.ViewModels
 {
@@ -30,8 +28,10 @@ namespace CryptocurrenciesWPF.ViewModels
             }
         }
 
-        public ObservableCollection<Market> Markets { get; set; }
-        public ObservableCollection<PriceHistory> PricesHistory { get; set; }
+        public SeriesCollection SeriesCollection { get; set; }
+
+        public ObservableCollection<Market> Markets { get; set; } = new ObservableCollection<Market>();
+        public ObservableCollection<PriceHistory> PricesHistory { get; set; } = new ObservableCollection<PriceHistory>();
 
         public CryptocurrencyProfileViewModel(NavigatorViewModel navigatorViewModel)
         {
@@ -39,25 +39,72 @@ namespace CryptocurrenciesWPF.ViewModels
             currentCryptocurrency = new Cryptocurrency();
         }
 
+        public Func<double, string> YFormatter { get; set; }
+        public string[] Labels { get; set; }
+
         public async Task UpdateMarketsList()
         {
             string currentId = currentCryptocurrency.Id;
+            Markets.Clear();
+            PricesHistory.Clear();
             try
             {
+
                 string queryStringMarkets = $"https://api.coincap.io/v2/markets?baseId={currentId}&limit=10";
                 string queryStringHistory = $"https://api.coincap.io/v2/assets/{currentId}/history?interval=d1";
                 var tMarkets = navigatorViewModel.HTTPClient.GetAsync(queryStringMarkets);
                 var tHistory = navigatorViewModel.HTTPClient.GetAsync(queryStringHistory);
 
                 await Task.WhenAll<HttpResponseMessage>(tMarkets, tHistory);
-                var responseMarkets = await tMarkets.Result.Content.ReadFromJsonAsync<JsonData<Market>>();
-                var responsePrices = await tHistory.Result.Content.ReadFromJsonAsync<JsonData<PriceHistory>>();
-                Markets = new ObservableCollection<Market>(responseMarkets.Data);
-                PricesHistory = new ObservableCollection<PriceHistory>(responsePrices.Data);
-            } catch (Exception ex)
+
+
+
+                var responseMarketsValue = await tMarkets.Result.Content.ReadAsStringAsync();
+                var responsePricesValue = await tHistory.Result.Content.ReadAsStringAsync();
+
+                var responseMarkets = JsonConvert.DeserializeObject<JsonData<Market>>(responseMarketsValue);
+                var responsePrices = JsonConvert.DeserializeObject<JsonData<PriceHistory>>(responsePricesValue);
+
+                responseMarkets?.Data?.ForEach(x =>
+                {
+                    Markets.Add(x);
+                });
+                responsePrices?.Data?.ForEach(x =>
+                {
+                    PricesHistory.Add(x);
+                });
+
+                List<double> prices = PricesHistory.Select<PriceHistory, double>(x => Math.Round(x.PriceUsd,2)).ToList();
+                List<string> times = new List<string>();
+                for (int i = 0; i < PricesHistory.Count; i++)
+                {
+                    var date = (new DateTime(1970, 1, 1)).AddMilliseconds(PricesHistory[i].Time);
+                    times.Add(date.ToString("dd.MM.yyyy"));
+                }
+
+                SeriesCollection = new SeriesCollection
+                {
+                    new LineSeries
+                    {
+                        Title = currentCryptocurrency.Name,
+                        Values = new ChartValues<double>(prices),
+                        LineSmoothness = 0, //0: straight lines, 1: really smooth lines
+                        PointGeometry = null,
+                        PointForeground = Brushes.Gray
+                    }
+                };
+
+                Labels = times.ToArray();
+                YFormatter = value => value.ToString("C", CultureInfo.CreateSpecificCulture("en"));
+
+            }
+            catch (Exception ex)
             {
 
             }
+            OnPropertyChanged("SeriesCollection");
+            OnPropertyChanged("Labels");
+            OnPropertyChanged("YFormatter");
             OnPropertyChanged("Markets");
         }
 

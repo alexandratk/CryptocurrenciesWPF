@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:CryptocurrenciesWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
             <ToolBar Style="{DynamicResource MaterialDesignToolBar}" FontSize="15">

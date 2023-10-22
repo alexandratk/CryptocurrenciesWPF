@@ -1,6 +1,7 @@
 ﻿using CryptocurrenciesWPF.Commands;
 using CryptocurrenciesWPF.Models;
 using CryptocurrenciesWPF.Views;
+using Newtonsoft.Json;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -57,11 +58,10 @@ namespace CryptocurrenciesWPF.ViewModels
             {
                 selectedNumber = value;
                 UpdateCryptocurrenciesList().ContinueWith(x => { OnPropertyChanged("SelectedNumber"); });
-             //   OnPropertyChanged("SelectedNumber");
             }
         }
 
-        public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; set; }
+        public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; set; } = new ObservableCollection<Cryptocurrency>();
 
         public List<int> Numbers { get; set; } = new List<int>();
 
@@ -74,28 +74,36 @@ namespace CryptocurrenciesWPF.ViewModels
 
         public async Task UpdateCryptocurrenciesList()
         {
-            var response = await navigatorViewModel.HTTPClient.GetFromJsonAsync<JsonData<Cryptocurrency>>("https://api.coincap.io/v2/assets?limit="+selectedNumber.ToString() + "&search=" + searchText);
-            Cryptocurrencies = new ObservableCollection<Cryptocurrency>(response.Data);
-            int cryptocurrenciesCount = Cryptocurrencies.Count;
-            for (int i = 0; i < cryptocurrenciesCount; i++)
+            var responseQuery = await navigatorViewModel.HTTPClient.GetAsync("https://api.coincap.io/v2/assets?limit="+selectedNumber.ToString() + "&search=" + searchText);
+
+            if (!responseQuery.IsSuccessStatusCode) { return; }
+
+            var responseValue = await responseQuery.Content.ReadAsStringAsync();
+            var response = JsonConvert.DeserializeObject<JsonData<Cryptocurrency>>(responseValue);
+
+            Cryptocurrencies.Clear();
+            response?.Data?.ForEach(x =>
             {
-                Cryptocurrencies[i].SupplyString = Cryptocurrencies[i].Supply.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
-                Cryptocurrencies[i].MarketCapUsdString = Cryptocurrencies[i].MarketCapUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
-                Cryptocurrencies[i].VolumeUsd24HrString = Cryptocurrencies[i].VolumeUsd24Hr.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
-                Cryptocurrencies[i].PriceUsdString = Cryptocurrencies[i].PriceUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
-                Cryptocurrencies[i].ChangePercent24HrString = Cryptocurrencies[i].ChangePercent24Hr.ToString("P", CultureInfo.InvariantCulture);
-                if (Cryptocurrencies[i].ChangePercent24Hr > 0)
+
+                x.SupplyString = x.Supply.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
+                x.MarketCapUsdString = x.MarketCapUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
+                x.VolumeUsd24HrString = x.VolumeUsd24Hr.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
+                x.PriceUsdString = x.PriceUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
+                x.ChangePercent24HrString = x.ChangePercent24Hr.ToString("P", CultureInfo.InvariantCulture);
+                if (x.ChangePercent24Hr > 0)
                 {
-                    Cryptocurrencies[i].ChangePercent24HrString = "+" + Cryptocurrencies[i].ChangePercent24HrString;
+                    x.ChangePercent24HrString = "+" + x.ChangePercent24HrString;
                 }
-            }
+
+                Cryptocurrencies.Add(x);
+            });
+
             OnPropertyChanged("Cryptocurrencies");
         }
 
 
         public void CreateNumberList()
         {
-
             Numbers.Add(5);
             Numbers.Add(10);
             Numbers.Add(20);

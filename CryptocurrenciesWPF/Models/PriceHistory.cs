@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CryptocurrenciesWPF.Common;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,9 @@ namespace CryptocurrenciesWPF.Models
 {
     public class PriceHistory
     {
-        public string PriceUsd { get; set; }
-        public ulong Time { get; set; }
+        [JsonConverter(typeof(DoubleJsonConverter))]
+        public double PriceUsd { get; set; }
+        public long Time { get; set; }
         public DateTime TimeDateTime { get; set; }
     }
 }

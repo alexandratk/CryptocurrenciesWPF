@@ -7,15 +7,18 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="CryptocurrenciesListPage">
-
+      Title="CryptocurrenciesListPage"
+        xmlns:converters="clr-namespace:CryptocurrenciesWPF.Common">
+    <Page.Resources>
+        <converters:DoubleConverter x:Key="DoubleConverter"/>
+    </Page.Resources>
     <DockPanel LastChildFill="True">
         <DockPanel Margin="25 0 25 10" DockPanel.Dock="Top">
             <materialDesign:PackIcon Kind="ListBoxOutline" Height="20" Width="20" Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center"></materialDesign:PackIcon>
             <ComboBox FontSize="14" ItemsSource="{Binding Numbers}" SelectedItem="{Binding SelectedNumber}">
             </ComboBox>
             <TextBlock Margin="25 0 10 0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">Search:</TextBlock>
-            <TextBox Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged, Delay=500}"/>
         </DockPanel>
         <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
             <ListBox.ItemContainerStyle>
@@ -37,13 +40,13 @@
                         <DockPanel Grid.Column="0">
                             <TextBlock FontSize="18" Text="{Binding Path=Rank}" />
                         </DockPanel>
-                        <Rectangle VerticalAlignment="Stretch" Width="1" Margin="0 2 0 2" Stroke="LightGray" />
+                        <Rectangle VerticalAlignment="Stretch" Width="1" Margin="6 2 0 2" Stroke="LightGray" />
                         <DockPanel Grid.Column="1" HorizontalAlignment="Left">
                             <TextBlock FontSize="18" Text="{Binding Path=Name}" />
                             <TextBlock Margin="3 0 0 0" FontSize="12" Text="{Binding Path=Symbol}" Foreground="Gray" />
                         </DockPanel>
                         <DockPanel Grid.Column="2" HorizontalAlignment="Right">
-                            <TextBlock FontSize="18" Text="{Binding Path=PriceUsdString}" />
+                            <TextBlock FontSize="18" Text="{Binding Path=PriceUsd, Converter={StaticResource DoubleConverter}, ConverterParameter=C2}" />
                             <TextBlock Margin="3 0 0 0" FontStyle="Italic" Text="{Binding Path=ChangePercent24HrString}" />
                         </DockPanel>
                     </Grid>
