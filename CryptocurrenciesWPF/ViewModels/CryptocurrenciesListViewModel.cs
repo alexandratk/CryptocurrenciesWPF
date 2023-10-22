@@ -79,8 +79,15 @@ namespace CryptocurrenciesWPF.ViewModels
             int cryptocurrenciesCount = Cryptocurrencies.Count;
             for (int i = 0; i < cryptocurrenciesCount; i++)
             {
+                Cryptocurrencies[i].SupplyString = Cryptocurrencies[i].Supply.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
+                Cryptocurrencies[i].MarketCapUsdString = Cryptocurrencies[i].MarketCapUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
+                Cryptocurrencies[i].VolumeUsd24HrString = Cryptocurrencies[i].VolumeUsd24Hr.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
                 Cryptocurrencies[i].PriceUsdString = Cryptocurrencies[i].PriceUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
                 Cryptocurrencies[i].ChangePercent24HrString = Cryptocurrencies[i].ChangePercent24Hr.ToString("P", CultureInfo.InvariantCulture);
+                if (Cryptocurrencies[i].ChangePercent24Hr > 0)
+                {
+                    Cryptocurrencies[i].ChangePercent24HrString = "+" + Cryptocurrencies[i].ChangePercent24HrString;
+                }
             }
             OnPropertyChanged("Cryptocurrencies");
         }

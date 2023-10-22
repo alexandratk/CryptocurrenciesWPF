@@ -4,34 +4,92 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CryptocurrenciesWPF.Views"
+      xml:space="preserve"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CryptocurrencyProfilePage">
     <ScrollViewer>
         <Grid>
             <DockPanel LastChildFill="True">
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Id}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Rank}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Symbol}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Name}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Supply}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.MaxSupply}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.MarketCapUsd}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.VolumeUsd24Hr}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.PriceUsd}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.ChangePercent24Hr}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <TextBlock FontSize="16" Text="{Binding Path=CurrentCryptocurrency.Vwap24Hr}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-            <ListBox ItemsSource="{Binding Path=Markets}" IsHitTestVisible="False">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5">
-                            <TextBlock FontSize="16" Text="{Binding Path=ExchangeId}" HorizontalAlignment="Center" />
-                            <TextBlock FontSize="16" Text="{Binding Path=BaseId}" HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </DockPanel>
+            <DockPanel DockPanel.Dock="Top" Grid.Row="0" LastChildFill="True" Margin="50 15 50 0">
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock FontSize="27" Text="{Binding Path=CurrentCryptocurrency.Name}" />
+                    <TextBlock Margin="3 0 0 0" FontSize="20" Text="{Binding Path=CurrentCryptocurrency.Symbol}" Foreground="Gray" />
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock FontSize="12" Foreground="Gray" Text="{Binding Path=CurrentCryptocurrency.Id, StringFormat=id: {0}}" />
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock FontSize="20" Text="{Binding Path=CurrentCryptocurrency.PriceUsdString}" />
+                    <TextBlock FontSize="20" Margin="3 0 0 0" FontStyle="Italic" Text="{Binding Path=CurrentCryptocurrency.ChangePercent24HrString}" />
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock FontSize="18" Text="{Binding Path=CurrentCryptocurrency.Symbol}"/>
+                    <TextBlock FontSize="18"> Market Information</TextBlock>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Popularity</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="15" Text="{Binding Path=CurrentCryptocurrency.Rank, StringFormat=#{0}}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1">Volume (24hours)</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="15" Text="{Binding Path=CurrentCryptocurrency.VolumeUsd24HrString}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2">Circulation Supply</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" FontSize="15" Text="{Binding Path=CurrentCryptocurrency.SupplyString}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                        <TextBlock Grid.Row="0" Grid.Column="3">Market Cap</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="15" Text="{Binding Path=CurrentCryptocurrency.MarketCapUsdString}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                    </Grid>
+                </DockPanel> 
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock FontSize="18">Purchase Markets</TextBlock>
+                </DockPanel>
+                </DockPanel>
+                <ListBox DockPanel.Dock="Top" ItemsSource="{Binding Path=Markets}" IsHitTestVisible="False" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="BorderThickness" Value="0 0 0 1" />
+                            <Setter Property="BorderBrush" Value="LightGray" />
+                            <Setter Property="Padding" Value="5 5 5 5" />
+                            <Setter Property="Margin" Value="50 0 10 0" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Column="0" HorizontalAlignment="Left">
+                                    <TextBlock FontSize="15" Text="{Binding Path=ExchangeId}" />
+                                </DockPanel>
+                                <DockPanel Grid.Column="1" HorizontalAlignment="Left">
+                                    <TextBlock FontSize="15" Text="{Binding Path=BaseId}" />
+                                    <TextBlock Margin="3 0 0 0" FontSize="12" Text="{Binding Path=BaseSymbol}" Foreground="Gray" />
+                                </DockPanel>
+                                <DockPanel Grid.Column="2" HorizontalAlignment="Left">
+                                    <TextBlock FontSize="15" Text="{Binding Path=QuoteId}" />
+                                    <TextBlock Margin="3 0 0 0" FontSize="12" Text="{Binding Path=QuoteSymbol}" Foreground="Gray" />
+                                </DockPanel>
+                                <DockPanel Grid.Column="3" HorizontalAlignment="Right">
+                                    <TextBlock FontSize="15" Text="{Binding Path=PriceUsd}" />
+                                </DockPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
         </Grid>
     </ScrollViewer>
 </Page>

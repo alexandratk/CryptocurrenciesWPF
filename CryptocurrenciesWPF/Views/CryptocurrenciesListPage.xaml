@@ -17,7 +17,7 @@
             <TextBlock Margin="25 0 10 0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">Search:</TextBlock>
             <TextBox Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
-        <ListBox BorderBrush="Gray" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="BorderThickness" Value="0 0 0 1" />

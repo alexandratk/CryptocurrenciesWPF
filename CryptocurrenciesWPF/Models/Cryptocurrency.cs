@@ -12,10 +12,13 @@ namespace CryptocurrenciesWPF.Models
         public string Rank { get; set; }
         public string Symbol { get; set; }
         public string Name { get; set; }
-        public string Supply { get; set; }
+        public decimal Supply { get; set; }
+        public string SupplyString { get; set; }
         public string MaxSupply { get; set; }
-        public string MarketCapUsd { get; set; }
-        public string VolumeUsd24Hr { get; set; }
+        public decimal MarketCapUsd { get; set; }
+        public string MarketCapUsdString { get; set; }
+        public decimal VolumeUsd24Hr { get; set; }
+        public string VolumeUsd24HrString { get; set; }
         public decimal PriceUsd { get; set; }
         public string PriceUsdString { get; set; }
         public decimal ChangePercent24Hr { get; set; }
