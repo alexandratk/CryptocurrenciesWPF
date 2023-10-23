@@ -4,15 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CryptocurrenciesWPF"
+        xmlns:localization = "clr-namespace:CryptocurrenciesWPF.Resources"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{x:Static localization:Resources.windowTitle}" Height="450" Width="800">
+
 
     <Grid>
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
             <ToolBar Style="{DynamicResource MaterialDesignToolBar}" FontSize="15">
-                <Button Command="{Binding GoToListViewCommand}" IsEnabled="{Binding EnabledGoToListViewButton}">List</Button>
+                <Button Command="{Binding GoToListViewCommand}" IsEnabled="{Binding EnabledGoToListViewButton}">
+                    <TextBlock Text="{x:Static localization:Resources.menuList}"></TextBlock></Button>
                 <Separator></Separator>
-                <Button Command="{Binding GoToListViewCommand}" IsEnabled="{Binding EnabledGoToListViewButton}">Chart</Button>
+                <Button Command="{Binding GoToListViewCommand}" IsEnabled="{Binding EnabledGoToListViewButton}">
+                    <TextBlock>Chart</TextBlock></Button>
             </ToolBar>
         </StackPanel>
 

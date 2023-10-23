@@ -9,7 +9,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CryptocurrencyProfilePage"
-        xmlns:converters="clr-namespace:CryptocurrenciesWPF.Common">
+      xmlns:converters="clr-namespace:CryptocurrenciesWPF.Common"
+      xmlns:localization = "clr-namespace:CryptocurrenciesWPF.Resources">
     <Page.Resources><converters:DoubleConverter x:Key="DoubleConverter"/></Page.Resources>
     <ScrollViewer>
         <Grid>
@@ -28,15 +29,15 @@
                     </DockPanel>
                     <lvc:CartesianChart Height="200" LegendLocation="None" DockPanel.Dock="Top" Margin="0 10 0 0" Series="{Binding SeriesCollection}">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Price" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                            <lvc:Axis Title="{x:Static localization:Resources.chartAxisPrice}" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Title="Date" Labels="{Binding Labels}"></lvc:Axis>
+                            <lvc:Axis Title="{x:Static localization:Resources.chartAxisDate}" Labels="{Binding Labels}"></lvc:Axis>
                         </lvc:CartesianChart.AxisX>
                     </lvc:CartesianChart>
                     <DockPanel DockPanel.Dock="Top" Margin="0 20 0 0">
-                        <TextBlock FontSize="18" Text="{Binding Path=CurrentCryptocurrency.Symbol}"/>
-                        <TextBlock FontSize="18"> Market Information</TextBlock>
+                        <TextBlock FontSize="20" Text="{Binding Path=CurrentCryptocurrency.Symbol}"/>
+                        <TextBlock FontSize="20" Text="{x:Static localization:Resources.textBlockMarketInformation}"></TextBlock>
                     </DockPanel>
                     <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch">
                         <Grid>
@@ -50,18 +51,18 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="0 13 0 3">Popularity</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="15" Text="{Binding Path=CurrentCryptocurrency.Rank, StringFormat=#{0}}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 13 0 3">Volume (24hours)</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="15" Text="{Binding Path=CurrentCryptocurrency.VolumeUsd24Hr, Converter={StaticResource DoubleConverter}, ConverterParameter=C2}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Margin="0 13 0 3">Circulation Supply</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="2" FontSize="15" Text="{Binding Path=CurrentCryptocurrency.Supply, Converter={StaticResource DoubleConverter}, ConverterParameter=C2}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-                            <TextBlock Grid.Row="0" Grid.Column="3" Margin="0 13 0 3">Market Cap</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="3" FontSize="15" Text="{Binding Path=CurrentCryptocurrency.MarketCapUsd, Converter={StaticResource DoubleConverter}, ConverterParameter=C2}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="0 13 0 3" Text="{x:Static localization:Resources.textBlockPopularity}"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="17" Text="{Binding Path=CurrentCryptocurrency.Rank, StringFormat=#{0}}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 13 0 3" Text="{x:Static localization:Resources.textBlockVolume24HR}"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="17" Text="{Binding Path=CurrentCryptocurrency.VolumeUsd24Hr, Converter={StaticResource DoubleConverter}, ConverterParameter=C2}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Margin="0 13 0 3" Text="{x:Static localization:Resources.textBlocCirculationSupply}"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" FontSize="17" Text="{Binding Path=CurrentCryptocurrency.Supply, Converter={StaticResource DoubleConverter}, ConverterParameter=C2}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                            <TextBlock Grid.Row="0" Grid.Column="3" Margin="0 13 0 3" Text="{x:Static localization:Resources.textBlockMarketCap}"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="3" FontSize="17" Text="{Binding Path=CurrentCryptocurrency.MarketCapUsd, Converter={StaticResource DoubleConverter}, ConverterParameter=C2}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
                         </Grid>
                     </DockPanel> 
                     <DockPanel DockPanel.Dock="Top" Margin="0 30 0 0">
-                        <TextBlock FontSize="18">Purchase Markets</TextBlock>
+                        <TextBlock FontSize="20" Text="{x:Static localization:Resources.textBlockPurchaseMarkets}"></TextBlock>
                     </DockPanel>
                 </DockPanel>
                 <ListBox Margin="0 13 0 0" DockPanel.Dock="Top" ItemsSource="{Binding Path=Markets}" IsHitTestVisible="False" HorizontalContentAlignment="Stretch">
@@ -76,16 +77,16 @@
                                          <ColumnDefinition Width="2.5*"></ColumnDefinition>
                                      </Grid.ColumnDefinitions>
                                      <DockPanel Margin="7 0 0 0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                         <TextBlock FontSize="13">Exchange</TextBlock>
+                                         <TextBlock FontSize="13" Text="{x:Static localization:Resources.listHeaderExchange}"></TextBlock>
                                      </DockPanel>
                                      <DockPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                         <TextBlock FontSize="13">Base</TextBlock>
+                                         <TextBlock FontSize="13" Text="{x:Static localization:Resources.listHeaderBase}"></TextBlock>
                                      </DockPanel>
                                      <DockPanel Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                         <TextBlock FontSize="13">Quote</TextBlock>
+                                         <TextBlock FontSize="13" Text="{x:Static localization:Resources.listHeaderQuote}"></TextBlock>
                                      </DockPanel>
                                      <DockPanel Grid.Column="3" HorizontalAlignment="Right" Margin="0 0 13 0" VerticalAlignment="Center">
-                                         <TextBlock FontSize="13">Price Usd</TextBlock>
+                                         <TextBlock FontSize="13" Text="{x:Static localization:Resources.listHeaderPriceUsd}"></TextBlock>
                                      </DockPanel>
                                  </Grid>
                                  <ItemsPresenter></ItemsPresenter>

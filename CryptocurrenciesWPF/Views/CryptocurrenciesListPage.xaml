@@ -8,7 +8,8 @@
       d:DesignHeight="450" d:DesignWidth="800"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="CryptocurrenciesListPage"
-        xmlns:converters="clr-namespace:CryptocurrenciesWPF.Common">
+      xmlns:localization = "clr-namespace:CryptocurrenciesWPF.Resources"
+      xmlns:converters="clr-namespace:CryptocurrenciesWPF.Common">
     <Page.Resources>
         <converters:DoubleConverter x:Key="DoubleConverter"/>
     </Page.Resources>
@@ -17,7 +18,7 @@
             <materialDesign:PackIcon Kind="ListBoxOutline" Height="20" Width="20" Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center"></materialDesign:PackIcon>
             <ComboBox FontSize="14" ItemsSource="{Binding Numbers}" SelectedItem="{Binding SelectedNumber}">
             </ComboBox>
-            <TextBlock Margin="25 0 10 0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">Search:</TextBlock>
+            <TextBlock Margin="25 0 10 0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{x:Static localization:Resources.textBlockSearch}"></TextBlock>
             <TextBox Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged, Delay=500}"/>
         </DockPanel>
         <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
