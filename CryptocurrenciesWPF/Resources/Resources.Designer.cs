@@ -61,6 +61,15 @@ namespace CryptocurrenciesWPF.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Convert.
+        /// </summary>
+        public static string buttonConvert {
+            get {
+                return ResourceManager.GetString("buttonConvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string chartAxisDate {
@@ -115,6 +124,15 @@ namespace CryptocurrenciesWPF.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Converter.
+        /// </summary>
+        public static string menuConverter {
+            get {
+                return ResourceManager.GetString("menuConverter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List.
         /// </summary>
         public static string menuList {
@@ -129,6 +147,15 @@ namespace CryptocurrenciesWPF.Resources {
         public static string textBlocCirculationSupply {
             get {
                 return ResourceManager.GetString("textBlocCirculationSupply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string textBlockFrom {
+            get {
+                return ResourceManager.GetString("textBlockFrom", resourceCulture);
             }
         }
         
@@ -160,11 +187,29 @@ namespace CryptocurrenciesWPF.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Purchase Markets.
+        ///   Looks up a localized string similar to Purchase Markets.
         /// </summary>
         public static string textBlockPurchaseMarkets {
             get {
                 return ResourceManager.GetString("textBlockPurchaseMarkets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string textBlockQuantity {
+            get {
+                return ResourceManager.GetString("textBlockQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        public static string textBlockResult {
+            get {
+                return ResourceManager.GetString("textBlockResult", resourceCulture);
             }
         }
         
@@ -174,6 +219,15 @@ namespace CryptocurrenciesWPF.Resources {
         public static string textBlockSearch {
             get {
                 return ResourceManager.GetString("textBlockSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string textBlockTo {
+            get {
+                return ResourceManager.GetString("textBlockTo", resourceCulture);
             }
         }
         

@@ -6,9 +6,53 @@
       xmlns:local="clr-namespace:CryptocurrenciesWPF.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="CryptocurrencyConversionPage">
+      Title="CryptocurrencyConversionPage"
+      xmlns:localization = "clr-namespace:CryptocurrenciesWPF.Resources">
 
     <Grid>
-        <TextBox>Cryptocurrency conversion page</TextBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2.5*"></RowDefinition>
+            <RowDefinition Height="2.5*"></RowDefinition>
+            <RowDefinition Height="2.5*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock FontSize="18" Grid.Column="1" Grid.Row="1" Text="{x:Static localization:Resources.textBlockFrom}"></TextBlock>
+        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrencyFrom}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock FontSize="18" Text="{Binding Path=Id}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <DockPanel Grid.Column="1" Grid.Row="2">
+            <TextBlock FontSize="18" DockPanel.Dock="Top" Text="{x:Static localization:Resources.textBlockQuantity}"></TextBlock>
+            <TextBox FontSize="18" DockPanel.Dock="Top" VerticalAlignment="Top" Name="NumberTextBox" Text="{Binding Path=NumberValue, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox"/>
+        </DockPanel>
+        <Button Grid.Row="1" Grid.Column="3" Command="{Binding ConvertCommand}">
+            <TextBlock  FontSize="18" Text="{x:Static localization:Resources.buttonConvert}"></TextBlock>
+        </Button>
+
+        <TextBlock FontSize="18" Grid.Column="5" Grid.Row="1" Text="{x:Static localization:Resources.textBlockTo}"></TextBlock>
+        <ComboBox Grid.Column="5" Grid.Row="1" ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrencyTo}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock  FontSize="18" Text="{Binding Path=Id}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <DockPanel Grid.Row="2" Grid.Column="5">
+            <TextBlock FontSize="18" DockPanel.Dock="Top" Text="{x:Static localization:Resources.textBlockResult}"></TextBlock>
+            <TextBlock  FontSize="20" DockPanel.Dock="Top" Text="{Binding ConversionResult}"></TextBlock>
+        </DockPanel>
     </Grid>
 </Page>

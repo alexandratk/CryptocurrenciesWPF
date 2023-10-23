@@ -16,20 +16,15 @@ namespace CryptocurrenciesWPF.Models
         public string Name { get; set; }
         [JsonConverter(typeof(DoubleJsonConverter))]
         public double Supply { get; set; }
-        public string SupplyString { get; set; }
         public string MaxSupply { get; set; }
         [JsonConverter(typeof(DoubleJsonConverter))]
         public double MarketCapUsd { get; set; }
-        public string MarketCapUsdString { get; set; }
         [JsonConverter(typeof(DoubleJsonConverter))]
         public double VolumeUsd24Hr { get; set; }
-        public string VolumeUsd24HrString { get; set; }
         [JsonConverter(typeof(DoubleJsonConverter))]
         public double PriceUsd { get; set; }
-        public string PriceUsdString { get; set; }
         [JsonConverter(typeof(DoubleJsonConverter))]
         public double ChangePercent24Hr { get; set; }
-        public string ChangePercent24HrString { get; set; }
         public string Vwap24Hr { get; set; }
     }
 }

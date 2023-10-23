@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="buttonConvert" xml:space="preserve">
+    <value>Convert</value>
+  </data>
   <data name="chartAxisDate" xml:space="preserve">
     <value>Date</value>
   </data>
@@ -135,11 +138,17 @@
   <data name="listHeaderQuote" xml:space="preserve">
     <value>Quote</value>
   </data>
+  <data name="menuConverter" xml:space="preserve">
+    <value>Converter</value>
+  </data>
   <data name="menuList" xml:space="preserve">
     <value>List</value>
   </data>
   <data name="textBlocCirculationSupply" xml:space="preserve">
     <value>Circulation Supply</value>
+  </data>
+  <data name="textBlockFrom" xml:space="preserve">
+    <value>From</value>
   </data>
   <data name="textBlockMarketCap" xml:space="preserve">
     <value>Market Cap</value>
@@ -151,10 +160,19 @@
     <value>Popularity</value>
   </data>
   <data name="textBlockPurchaseMarkets" xml:space="preserve">
-    <value> Purchase Markets</value>
+    <value>Purchase Markets</value>
+  </data>
+  <data name="textBlockQuantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="textBlockResult" xml:space="preserve">
+    <value>Result</value>
   </data>
   <data name="textBlockSearch" xml:space="preserve">
     <value>Search:</value>
+  </data>
+  <data name="textBlockTo" xml:space="preserve">
+    <value>To</value>
   </data>
   <data name="textBlockVolume24HR" xml:space="preserve">
     <value>Volume (24hours)</value>

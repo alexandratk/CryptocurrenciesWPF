@@ -15,8 +15,8 @@
                 <Button Command="{Binding GoToListViewCommand}" IsEnabled="{Binding EnabledGoToListViewButton}">
                     <TextBlock Text="{x:Static localization:Resources.menuList}"></TextBlock></Button>
                 <Separator></Separator>
-                <Button Command="{Binding GoToListViewCommand}" IsEnabled="{Binding EnabledGoToListViewButton}">
-                    <TextBlock>Chart</TextBlock></Button>
+                <Button Command="{Binding GoToConversionViewCommand}" IsEnabled="{Binding EnabledGoToConversionViewButton}">
+                    <TextBlock Text="{x:Static localization:Resources.menuConverter}"></TextBlock></Button>
             </ToolBar>
         </StackPanel>
 

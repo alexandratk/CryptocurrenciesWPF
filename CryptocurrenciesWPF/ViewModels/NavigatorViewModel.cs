@@ -9,6 +9,22 @@ namespace CryptocurrenciesWPF.ViewModels
 {
     public class NavigatorViewModel : BaseViewModel
     {
+        private CryptocurrencyConversionPage cryptocurrencyConversionPage;
+        private CryptocurrencyConversionViewModel cryptocurrencyConversionViewModel;
+
+        private CryptocurrenciesListPage cryptocurrenciesListPage;
+        private CryptocurrenciesListViewModel cryptocurrenciesListViewModel;
+
+        private CryptocurrencyProfileViewModel cryptocurrencyProfileViewModel;
+
+        private Page currentPage;
+
+        private bool enabledGoToListViewButton;
+        private bool enabledGoToConversionViewButton;
+
+        private RelayCommand goToConversionViewCommand;
+        private RelayCommand goToListViewCommand;
+
         private HttpClient httpClient = new HttpClient();
 
         private Stack<(Page page, BaseViewModel context)> pageHistory = new Stack<(Page, BaseViewModel)>();
@@ -21,7 +37,6 @@ namespace CryptocurrenciesWPF.ViewModels
             }
         }
 
-        private RelayCommand goToListViewCommand;
         public RelayCommand GoToListViewCommand
         {
             get
@@ -37,7 +52,19 @@ namespace CryptocurrenciesWPF.ViewModels
             }
         }
 
-        private Page currentPage;
+        public RelayCommand GoToConversionViewCommand
+        {
+            get
+            {
+                return goToConversionViewCommand ??
+                  (goToConversionViewCommand = new RelayCommand(obj =>
+                  {
+                      GoToPage(cryptocurrencyConversionPage);
+                      EnabledGoToConversionViewButton = false;
+                  }));
+            }
+        }
+
         public Page CurrentPage
         {
             get { return currentPage; }
@@ -48,7 +75,6 @@ namespace CryptocurrenciesWPF.ViewModels
             }
         }
 
-        private bool enabledGoToListViewButton;
         public bool EnabledGoToListViewButton
         {
             get { return enabledGoToListViewButton; }
@@ -59,13 +85,15 @@ namespace CryptocurrenciesWPF.ViewModels
             }
         }
 
-        private CryptocurrenciesListPage cryptocurrenciesListPage;
-        private CryptocurrenciesListViewModel cryptocurrenciesListViewModel;
-
-        private CryptocurrencyConversionPage cryptocurrencyConversionPage;
-        private CryptocurrencyConversionViewModel cryptocurrencyConversionViewModel;
-
-        private CryptocurrencyProfileViewModel cryptocurrencyProfileViewModel;
+        public bool EnabledGoToConversionViewButton
+        {
+            get { return enabledGoToConversionViewButton; }
+            set
+            {
+                enabledGoToConversionViewButton = value;
+                OnPropertyChanged("EnabledGoToConversionViewButton");
+            }
+        }
 
         public NavigatorViewModel()
         {
@@ -80,6 +108,7 @@ namespace CryptocurrenciesWPF.ViewModels
             cryptocurrencyProfileViewModel = new CryptocurrencyProfileViewModel(this);
 
             CurrentPage = cryptocurrenciesListPage;
+            EnabledGoToConversionViewButton = true;
         }
 
         public void GoToPage(Page page)
@@ -87,6 +116,10 @@ namespace CryptocurrenciesWPF.ViewModels
             if (!EnabledGoToListViewButton)
             {
                 EnabledGoToListViewButton = true;
+            }
+            if (!EnabledGoToConversionViewButton)
+            {
+                EnabledGoToConversionViewButton = true;
             }
             CurrentPage = page;
         }

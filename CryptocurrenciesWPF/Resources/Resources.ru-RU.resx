@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="buttonConvert" xml:space="preserve">
+    <value>Перевести</value>
+  </data>
   <data name="chartAxisDate" xml:space="preserve">
     <value>Дата</value>
   </data>
@@ -127,7 +130,7 @@
     <value>Валюта сделки</value>
   </data>
   <data name="listHeaderExchange" xml:space="preserve">
-    <value>Біржа</value>
+    <value>Биржа</value>
   </data>
   <data name="listHeaderPriceUsd" xml:space="preserve">
     <value>Цена в долларах США</value>
@@ -135,11 +138,17 @@
   <data name="listHeaderQuote" xml:space="preserve">
     <value>Контрвалюта</value>
   </data>
+  <data name="menuConverter" xml:space="preserve">
+    <value>Конвертор</value>
+  </data>
   <data name="menuList" xml:space="preserve">
     <value>Криптовалюты</value>
   </data>
   <data name="textBlocCirculationSupply" xml:space="preserve">
     <value>Объем в обращении</value>
+  </data>
+  <data name="textBlockFrom" xml:space="preserve">
+    <value>Из валюты</value>
   </data>
   <data name="textBlockMarketCap" xml:space="preserve">
     <value>Капитализация</value>
@@ -151,10 +160,19 @@
     <value>Рейтинг</value>
   </data>
   <data name="textBlockPurchaseMarkets" xml:space="preserve">
-    <value>рынки приобретения</value>
+    <value>Биржи для приобретения</value>
+  </data>
+  <data name="textBlockQuantity" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="textBlockResult" xml:space="preserve">
+    <value>Результат</value>
   </data>
   <data name="textBlockSearch" xml:space="preserve">
     <value>Поиск:</value>
+  </data>
+  <data name="textBlockTo" xml:space="preserve">
+    <value>В валюту</value>
   </data>
   <data name="textBlockVolume24HR" xml:space="preserve">
     <value>Объем (24 ч.)</value>

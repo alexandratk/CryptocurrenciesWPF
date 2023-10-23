@@ -19,7 +19,7 @@
             <ComboBox FontSize="14" ItemsSource="{Binding Numbers}" SelectedItem="{Binding SelectedNumber}">
             </ComboBox>
             <TextBlock Margin="25 0 10 0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{x:Static localization:Resources.textBlockSearch}"></TextBlock>
-            <TextBox Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged, Delay=500}"/>
+            <TextBox Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged, Delay=300}"/>
         </DockPanel>
         <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Cryptocurrencies}" SelectedItem="{Binding SelectedCryptocurrency}">
             <ListBox.ItemContainerStyle>
@@ -48,7 +48,7 @@
                         </DockPanel>
                         <DockPanel Grid.Column="2" HorizontalAlignment="Right">
                             <TextBlock FontSize="18" Text="{Binding Path=PriceUsd, Converter={StaticResource DoubleConverter}, ConverterParameter=C2}" />
-                            <TextBlock Margin="3 0 0 0" FontStyle="Italic" Text="{Binding Path=ChangePercent24HrString}" />
+                            <TextBlock Margin="3 0 0 0" FontStyle="Italic" Text="{Binding Path=ChangePercent24Hr, Converter={StaticResource DoubleConverter}, ConverterParameter=P}" />
                         </DockPanel>
                     </Grid>
                 </DataTemplate>

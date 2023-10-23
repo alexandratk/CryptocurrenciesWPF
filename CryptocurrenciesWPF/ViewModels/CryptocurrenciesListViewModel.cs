@@ -20,6 +20,8 @@ namespace CryptocurrenciesWPF.ViewModels
 {
     public class CryptocurrenciesListViewModel : BaseViewModel
     {
+        private string HTTP_PATH = $"https://api.coincap.io/v2/assets?limit=";
+
         private NavigatorViewModel navigatorViewModel;
 
         private Cryptocurrency selectedCryptocurrency;
@@ -32,7 +34,7 @@ namespace CryptocurrenciesWPF.ViewModels
             set
             {
                 searchText = value;
-                OnPropertyChanged("SearchText");
+                OnPropertyChanged(nameof(SearchText));
                 UpdateCryptocurrenciesList();
             }
         }
@@ -45,7 +47,7 @@ namespace CryptocurrenciesWPF.ViewModels
                 if (value != null)
                 {
                     selectedCryptocurrency = null;
-                    OnPropertyChanged("SelectedCryptocurrency");
+                    OnPropertyChanged(nameof(SelectedCryptocurrency));
                     navigatorViewModel.GoToProfilePageFromListPage(value);
                 }
             }
@@ -57,11 +59,13 @@ namespace CryptocurrenciesWPF.ViewModels
             set
             {
                 selectedNumber = value;
-                UpdateCryptocurrenciesList().ContinueWith(x => { OnPropertyChanged("SelectedNumber"); });
+                UpdateCryptocurrenciesList().ContinueWith(x =>
+                    { OnPropertyChanged(nameof(SelectedNumber)); });
             }
         }
 
-        public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; set; } = new ObservableCollection<Cryptocurrency>();
+        public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; set; } 
+            = new ObservableCollection<Cryptocurrency>();
 
         public List<int> Numbers { get; set; } = new List<int>();
 
@@ -74,31 +78,22 @@ namespace CryptocurrenciesWPF.ViewModels
 
         public async Task UpdateCryptocurrenciesList()
         {
-            var responseQuery = await navigatorViewModel.HTTPClient.GetAsync("https://api.coincap.io/v2/assets?limit="+selectedNumber.ToString() + "&search=" + searchText);
+            var responseQuery = await navigatorViewModel.HTTPClient
+                .GetAsync(HTTP_PATH + selectedNumber.ToString() + "&search=" + searchText);
 
             if (!responseQuery.IsSuccessStatusCode) { return; }
 
             var responseValue = await responseQuery.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<JsonData<Cryptocurrency>>(responseValue);
+            var response = JsonConvert
+                .DeserializeObject<JsonData<Cryptocurrency>>(responseValue);
 
             Cryptocurrencies.Clear();
             response?.Data?.ForEach(x =>
             {
-
-                x.SupplyString = x.Supply.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
-                x.MarketCapUsdString = x.MarketCapUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
-                x.VolumeUsd24HrString = x.VolumeUsd24Hr.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
-                x.PriceUsdString = x.PriceUsd.ToString("C2", CultureInfo.CreateSpecificCulture("en"));
-                x.ChangePercent24HrString = x.ChangePercent24Hr.ToString("P", CultureInfo.InvariantCulture);
-                if (x.ChangePercent24Hr > 0)
-                {
-                    x.ChangePercent24HrString = "+" + x.ChangePercent24HrString;
-                }
-
                 Cryptocurrencies.Add(x);
             });
 
-            OnPropertyChanged("Cryptocurrencies");
+            OnPropertyChanged(nameof(Cryptocurrencies));
         }
 
 
