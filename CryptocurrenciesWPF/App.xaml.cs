@@ -16,8 +16,7 @@ namespace CryptocurrenciesWPF
     public partial class App : Application
     {
         public App() {
-            //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("uk-UA");
-            //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en");
+            
         }
 
         protected override void OnStartup(StartupEventArgs e)
