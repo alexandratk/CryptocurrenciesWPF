@@ -1,4 +1,5 @@
-﻿using CryptocurrenciesWPF.Commands;
+﻿using CryptocurrenciesWPF.Client;
+using CryptocurrenciesWPF.Commands;
 using CryptocurrenciesWPF.Models;
 using CryptocurrenciesWPF.Views;
 using System.Collections.Generic;
@@ -25,16 +26,13 @@ namespace CryptocurrenciesWPF.ViewModels
         private RelayCommand goToConversionViewCommand;
         private RelayCommand goToListViewCommand;
 
-        private HttpClient httpClient = new HttpClient();
+        private APIClient client = new APIClient();
 
         private Stack<(Page page, BaseViewModel context)> pageHistory = new Stack<(Page, BaseViewModel)>();
 
-        public HttpClient HTTPClient
+        public APIClient Client
         {
-            get
-            {
-                return httpClient;
-            }
+            get { return client; }
         }
 
         public RelayCommand GoToListViewCommand

@@ -54,21 +54,13 @@ namespace CryptocurrenciesWPF.ViewModels
             PricesHistory.Clear();
             try
             {
+                CryptocurrencyInfoModel cryptocurrencyInfoModel =
+                    await navigatorViewModel.Client.GetInfoForCryptocurrencyHTTP(currentId);
 
-                string queryStringMarkets =
-                    $"https://api.coincap.io/v2/markets?baseId={currentId}&limit=10";
-                string queryStringHistory = 
-                    $"https://api.coincap.io/v2/assets/{currentId}/history?interval=d1";
-                var tMarkets = navigatorViewModel.HTTPClient.GetAsync(queryStringMarkets);
-                var tHistory = navigatorViewModel.HTTPClient.GetAsync(queryStringHistory);
-
-                await Task.WhenAll<HttpResponseMessage>(tMarkets, tHistory);
-
-                var responseMarketsValue = await tMarkets.Result.Content.ReadAsStringAsync();
-                var responsePricesValue = await tHistory.Result.Content.ReadAsStringAsync();
-
-                var responseMarkets = JsonConvert.DeserializeObject<JsonData<Market>>(responseMarketsValue);
-                var responsePrices = JsonConvert.DeserializeObject<JsonData<PriceHistory>>(responsePricesValue);
+                var responseMarkets = JsonConvert.DeserializeObject<JsonData<Market>>(
+                    cryptocurrencyInfoModel.HTTPResponseMarkets);
+                var responsePrices = JsonConvert.DeserializeObject<JsonData<PriceHistory>>(
+                    cryptocurrencyInfoModel.HTTPResponsePrices);
 
                 responseMarkets?.Data?.ForEach(x =>
                 {

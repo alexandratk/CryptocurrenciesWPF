@@ -104,7 +104,7 @@ namespace CryptocurrenciesWPF.ViewModels
 
         public async Task UpdateCryptocurrenciesList()
         {
-            var responseQuery = await navigatorViewModel.HTTPClient.GetAsync(HTTP_PATH);
+            var responseQuery = await navigatorViewModel.Client.GetInfoForConversionHTTP();
 
             if (!responseQuery.IsSuccessStatusCode) { return; }
 
